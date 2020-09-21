@@ -1,0 +1,255 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Navigation Bar -->
+<div class="w3-bar w3-blue ">
+  <a href="{% url 'home' %}" class="w3-bar-item w3-button  w3-white  w3-mobile w3-xlarge" style="z-index:3;width:320px;">
+      <!--<img src="logo.png" style="width:10%;">-->
+    PredicTx</a>
+  <a href="{% url 'test' %}" class="w3-bar-item w3-button w3-mobile">Diseases</a>
+  <a href="#about" class="w3-bar-item w3-button w3-mobile">About</a>
+  <a href="#contact" class="w3-bar-item w3-button w3-mobile">Contact</a>
+  <a href="{% url 'test' %}" class="w3-bar-item w3-button w3-right  w3-mobile">Test Now</a>
+</div>
+
+<!-- Page content -->
+<header class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
+<img class="w3-image" src="{% static 'assets/images/heartb.jpg' %}" alt="London" width="1500" height="50">
+  <div class="w3-content" style="max-width:1532px;">
+      <div class="w3-display-middle" style="width:65%">
+
+  <div class="w3-container w3-margin-top w3-blue" id="rooms">
+    <h2>Cardio Vascular Test</h2>
+    <p>We need some informations to give you the accurate result</p>
+  </div>
+  
+  <div class="w3-padding w3-light-blue">
+      <form name="cardio_vascular" id="cardio_vascular" method="post">
+       {% csrf_token %}
+    <div class="w3-row m3">
+      <label> Birth Date </label>
+      <input class="w3-input w3-border" id="age" name="age" type="date" placeholder="Days">
+    </div>
+    <div class="w3-row m3">
+      <label> Weight</label>
+      <input class="w3-input w3-border" type="number" id="weight" name="weight" placeholder="in kg">
+    </div>
+    <div class="w3-row m2">
+      <label> Height</label>
+      <input class="w3-input w3-border" type="number" id="height" name="height" placeholder="in cm">
+    </div>
+      
+       <div class="w3-row m3">
+      <label>Gender </label>
+          <div>
+      <select class="w3-select" id="gender" name="gender">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      </select>
+      </div>
+      </div>  
+      
+    <div class="w3-row m2">
+      <label> Glucose</label>
+      <select class="w3-select" id="glucose" name="glucose">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="Normal">Normal</option>
+      <option value="Above Normal">Above Normal</option>
+      <option value="Well Above Normal">Well Above Normal</option>
+      </select>
+    </div>
+      
+      <div class="w3-row m2">
+      <label> Cholesterol</label>
+      <select class="w3-select" id="cholesterol" name="cholesterol">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="Normal">Normal</option>
+      <option value="Above Normal">Above Normal</option>
+      <option value="Well Above Normal">Well Above Normal</option>
+      </select>
+    </div>
+      
+      <div class="w3-row m3">
+      <label>Systolic BP (high) </label>
+      <input class="w3-input w3-border" type="number" id="systolic" name="systolic" placeholder="0">
+    </div>
+      
+      <div class="w3-row m3">
+      <label>Diastolic BP (low) </label>
+      <input class="w3-input w3-border" type="number" id="diastolic" name="diastolic" placeholder="0">
+    </div>
+          
+          <div class="w3-row m3">
+      <label> Do you do smoking? </label>
+          <div>
+      <select class="w3-select" id="smoking" name="smoking">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+      </select>
+      </div>
+              
+          </div>
+          
+            <div class="w3-row m3">
+      <label> do you drink alcohol? </label>
+          <div>
+      <select class="w3-select" id="alcohol" name="alcohol">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+      </select>
+      </div>
+              
+          </div>
+          
+          <div class="w3-row m3">
+      <label> Do you do any physical activity? </label>
+          <div>
+      <select class="w3-select" id="physical_activity" name="physical_activity">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+      </select>
+      </div>
+              
+          </div>
+    
+          <br>
+      </form>
+    <div class="w3-row m2">
+      <!--<label>
+          <i class="fa fa-search"></i> Search</label>-->
+      <button class="w3-button w3-block w3-green" onclick="post();">Calculate</button>
+    </div>
+  
+  </div>
+      
+     <script>
+    function post()
+    {
+         var age= document.getElementById('age').value;
+         var birth_date = new Date(age);
+         var current_date = new Date();
+         // To calculate the time difference of two dates
+         var Difference_In_Time = current_date.getTime() - birth_date.getTime();
+
+         // To calculate the no. of days between two dates
+         var Difference_In_Days = parseInt(Difference_In_Time / (1000 * 3600 * 24));
+         //alert(Difference_In_Days);
+         var height= document.getElementById('height').value;
+        var weight= document.getElementById('weight').value;
+
+        var gender= document.getElementById('gender').value;
+        var glucose= document.getElementById('glucose').value;
+        var cholesterol= document.getElementById('cholesterol').value;
+       var systolic= document.getElementById('systolic').value;
+        var diastolic= document.getElementById('diastolic').value;
+        var smoking= document.getElementById('smoking').value;
+        var alcohol= document.getElementById('alcohol').value;
+        var physical_activity= document.getElementById('physical_activity').value;
+        jQuery.ajax({
+            type: 'POST',
+            url: '/api/v1/predict',
+            cache: false,
+            //dataType: "json", // and this
+            data: {
+                verify_token: "{{verify_token}}",
+                type: "cardiovascular_organized",
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                age: Difference_In_Days,
+                height:height,
+                weight:weight,
+                gender:gender,
+                glucose:glucose,
+                cholesterol:cholesterol,
+                systolic_bp_high:systolic,
+                diastolic_bp_low:diastolic,
+                smoking:smoking,
+                alcohol:alcohol,
+                physical_activity:physical_activity
+            },
+
+            success: function(response) {
+                //alert(response.prediction);
+                //alert("response : "+JSON.stringify(response));
+                //document.forms["authentication"].submit();
+                var result_text = "";
+                if(parseInt(response.prediction) == 0)
+                {
+                    result_text="Congratulations You May Not Have Cardio Vascular Disease From Our Prediction";
+                    document.getElementById('result').value=result_text;
+                }
+                else
+                {
+                    result_text="You May Have Cardio Vascular Disease. You Should Visit A doctor Very Soon";
+                    document.getElementById('result').value=result_text;
+                }
+                // alert(response.prediction);
+                document.getElementById('subscribe').style.display='block';
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //console.log(textStatus, errorThrown);
+                alert("alert : "+errorThrown);
+            },
+            complete:function(response) {
+
+            }
+        });
+    }
+</script>
+
+
+  
+
+<!-- End page content -->
+</div>
+      
+    <!-- Subscribe Modal -->
+<div id="subscribe" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom w3-padding-large">
+    <div class="w3-container w3-white w3-center">
+      <i onclick="document.getElementById('subscribe').style.display='none'" class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+      <h2 class="w3-wide">Your result is</h2>
+      <p></p>
+      <p><input class="w3-input w3-border" type="text" id="result" name="result" placeholder=""></p>
+      <button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Done</button>
+    </div>
+  </div>
+</div>
+    </div>
+    </header>
+
+<!-- Footer -->
+<footer class="w3-padding-32 w3-dark-grey w3-center w3-margin-top">
+  <h5>Find Us On</h5>
+  <div class="w3-xlarge w3-padding-16">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">team a1</a></p>
+</footer>
+
+
+
+
+</body>
+</html>
